@@ -15,12 +15,18 @@
  */
 package sample.config;
 
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.JwtValidators;
+import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
+import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Joe Grandja
@@ -29,6 +35,23 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 @Configuration
 public class ResourceServerConfig {
+
+    @Bean
+    public ReactiveJwtDecoder jwtDecoder(OAuth2ResourceServerProperties oAuth2ResourceServerProperties/*, WebClient.Builder webClientBuilder*/) {
+        OAuth2ResourceServerProperties.Jwt properties = oAuth2ResourceServerProperties.getJwt();
+        NimbusReactiveJwtDecoder nimbusReactiveJwtDecoder = NimbusReactiveJwtDecoder
+                .withJwkSetUri(properties.getJwkSetUri())
+//                .webClient(webClientBuilder.build())
+                .jwsAlgorithm(SignatureAlgorithm.RS256)
+                .jwsAlgorithm(SignatureAlgorithm.ES256)
+                .build();
+        String issuerUri = properties.getIssuerUri();
+        if (issuerUri != null) {
+            nimbusReactiveJwtDecoder.setJwtValidator(JwtValidators.createDefaultWithIssuer(issuerUri));
+        }
+        return nimbusReactiveJwtDecoder;
+    }
+
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         return http

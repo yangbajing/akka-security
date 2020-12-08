@@ -1,12 +1,12 @@
 import Dependencies._
 
-ThisBuild / scalaVersion := "2.12.12"
+ThisBuild / scalaVersion := "2.13.4"
 
-ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.3")
+ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.4")
 
 ThisBuild / scalafmtOnCompile := true
 
-ThisBuild / version := "0.1"
+ThisBuild / version := "0.2.0"
 
 lazy val parent =
   Project("akka-security", file("."))

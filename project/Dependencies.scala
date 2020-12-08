@@ -6,18 +6,18 @@ import sbt._
  */
 object Dependencies {
   val versionScala212 = "2.12.12"
-  val versionScala213 = "2.13.3"
+  val versionScala213 = "2.13.4"
   val versionScalaXml = "1.3.0"
   val versionScalaCollectionCompat = "2.2.0"
   val versionScalatest = "3.2.2"
-  val versionAkka = "2.6.9"
-  val versionAkkaManagement = "1.0.8"
-  val versionAkkaHttp = "10.2.0"
+  val versionAkka = "2.6.10"
+  val versionAkkaManagement = "1.0.9"
+  val versionAkkaHttp = "10.2.1"
   val versionAkkaHttpCors = "0.4.3"
   val versionJoseJwt = "9.0.1"
   val versionNacosScala = "1.3.2"
   val versionAlpnAgent = "2.0.10"
-  val versionSpringBoot = "2.3.4.RELEASE"
+  val versionSpringBoot = "2.3.5.RELEASE"
 
   val _scalaXml = ("org.scala-lang.modules" %% "scala-xml" % versionScalaXml).exclude("org.scala-lang", "scala-library")
   val _scalatest = "org.scalatest" %% "scalatest" % versionScalatest

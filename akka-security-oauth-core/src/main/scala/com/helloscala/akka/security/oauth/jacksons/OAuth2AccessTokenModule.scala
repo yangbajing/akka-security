@@ -46,7 +46,7 @@ class OAuth2AccessTokenSerializer(vc: Class[OAuth2AccessToken]) extends StdSeria
     gen.writeStringField("access_token", value.tokenValue)
     gen.writeStringField("scope", value.scopes.mkString(" "))
     gen.writeStringField("token_type", value.tokenType.VALUE)
-    gen.writeStringField("expires_in", Duration.between(value.issuedAt, value.expiresAt).toSeconds.toString)
+    gen.writeNumberField("expires_in", Duration.between(value.issuedAt, value.expiresAt).toSeconds)
     gen.writeEndObject()
   }
 

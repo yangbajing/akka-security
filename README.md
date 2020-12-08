@@ -43,7 +43,7 @@ This sample integrates ~~spring-security-oauth2-client and~~ spring-security-oau
 
 ```
 curl -i -XPOST 'http://localhost:9000/oauth2/token' \
-  -u 'messaging-client:secret' \
+  -u 'ec-client:secret' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'grant_type=client_credentials&scope=message.read'
 ```
