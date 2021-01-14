@@ -56,7 +56,7 @@ trait OAuth2Directive {
   }
 
   def extractOAuth2TokenAuthentication: Directive1[OAuth2AccessTokenAuthentication] =
-    headerValueByType(Authorization).flatMap { authorization =>
+    headerValueByType[Authorization]().flatMap { authorization =>
       entity(as[FormData]).flatMap { formData =>
         val grantTypeEither = getGrantType(formData)
         val errors: Seq[Rejection] = List(grantTypeEither).flatMap(_.left.toOption)

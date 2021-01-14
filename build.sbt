@@ -6,7 +6,15 @@ ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.4")
 
 ThisBuild / scalafmtOnCompile := true
 
-ThisBuild / version := "0.2.0"
+ThisBuild / version := "0.3.0-SNAPSHOT"
+
+ThisBuild / publishTo := (if (version.value.endsWith("SNAPSHOT"))
+                            Some("Artifactory Realm".at(
+                              "https://jfrog-artifactory.quanguolian.xyz/artifactory/sbt;build.timestamp=" + new java.util.Date().getTime))
+                          else
+                            Some("fruits-sbt".at("https://jfrog-artifactory.quanguolian.xyz/artifactory/sbt")))
+
+ThisBuild / credentials += Credentials(Path.userHome / ".sbt" / ".credentials_fruits")
 
 lazy val parent =
   Project("akka-security", file("."))
@@ -112,19 +120,19 @@ def basicSettings =
     fork in run := true,
     fork in Test := true,
     parallelExecution in Test := false,
-    libraryDependencies ++= Seq(_scalatest % Test)) ++ publishing
+    libraryDependencies ++= Seq(_scalatest % Test)) //++ publishing
 
-def publishing =
-  Seq(
-    bintrayOrganization := Some("helloscala"),
-    bintrayRepository := "maven",
-    developers := List(
-      Developer(
-        id = "yangbajing",
-        name = "Yang Jing",
-        email = "yang.xunjing@qq.com",
-        url = url("https://github.com/yangbajing"))),
-    scmInfo := Some(
-      ScmInfo(
-        url("https://github.com/yangbajing/nacos-sdk-scala"),
-        "scm:git:git@github.com:yangbajing/nacos-sdk-scala.git")))
+//def publishing =
+//  Seq(
+//    bintrayOrganization := Some("helloscala"),
+//    bintrayRepository := "maven",
+//    developers := List(
+//      Developer(
+//        id = "yangbajing",
+//        name = "Yang Jing",
+//        email = "yang.xunjing@qq.com",
+//        url = url("https://github.com/yangbajing"))),
+//    scmInfo := Some(
+//      ScmInfo(
+//        url("https://github.com/yangbajing/nacos-sdk-scala"),
+//        "scm:git:git@github.com:yangbajing/nacos-sdk-scala.git")))

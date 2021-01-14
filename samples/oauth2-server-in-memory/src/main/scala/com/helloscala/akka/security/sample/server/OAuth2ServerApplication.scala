@@ -19,11 +19,14 @@ object OAuth2ServerApplication {
   private val logger = LoggerFactory.getLogger(OAuth2ServerApplication.getClass)
 
   def main(args: Array[String]): Unit = {
-    implicit val system = ActorSystem(SpawnProtocol(), "oauth-server")
+    val system = ActorSystem(SpawnProtocol(), "oauth-server")
+    implicit val classicSystem = system.classicSystem
     import system.executionContext
     Await.result(OAuth2AuthorizationServerCreator.init(system), 2.seconds)
     val route = new OAuth2Route(system).route
-    val bindingFuture = Http().newServerAt("localhost", 9000).bind(route)
+
+//    val bindingFuture = Http().newServerAt("localhost", 9000).bind(route)
+    val bindingFuture = Http().bindAndHandle(route, "localhost", 9000)
 
     logger.info(s"Server online at http://localhost:9000/\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return

@@ -12,7 +12,7 @@ object Dependencies {
   val versionScalatest = "3.2.2"
   val versionAkka = "2.6.10"
   val versionAkkaManagement = "1.0.9"
-  val versionAkkaHttp = "10.2.1"
+  val versionAkkaHttp = "10.1.13" //"10.2.2"
   val versionAkkaHttpCors = "0.4.3"
   val versionJoseJwt = "9.0.1"
   val versionNacosScala = "1.3.2"
